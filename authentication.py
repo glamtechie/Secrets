@@ -16,7 +16,7 @@ urls=(
 
 class Index:
     def GET(self):
-	response = { message : "Welcome to Pooja's Secrets API!", urls : urls }
+	response = { "message" : "Welcome to Pooja's Secrets API!", "urls" : urls }
 	return json.dumps(response)
 
 class Secrets:
