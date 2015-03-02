@@ -138,7 +138,6 @@ class New:
             return "Signed up! You are also logged in now!"
 
 app=web.application(urls,globals())
-#store session on disk or in db?
 web.config.debug=False
 session = web.session.Session(app, web.session.DiskStore('sessions'), initializer={'loggedin': False,'username':''})
 session_data = session._initializer
