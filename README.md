@@ -9,6 +9,9 @@ Files:
 
 Required downloads to run this api:
 1. Curl (you may choose to send the requests using any other too , but you will have to write your own test commands)
+2. awk (to run test.sh)
+
+To test this api using test.sh, type './tesh.sh https://poojanaik.webfactional.com/secrets_app' on your terminal.
 
 Currently, the api is deployed on: https://poojanaik.webfactional.com/secrets_app/
 
@@ -16,40 +19,46 @@ Required downloads to host your own server:
 1. MySQL
 2. Python 2.7 (and associated libraries)
 
-API Requests:
+API:
 
 POST /new:
     Create new user with username and password. Enter password twice.
-    Suggested usage: curl -k -X POST "$ROOT_URL/new" --data "user=poojanaik&pwd1=tarrega&pwd2=tarrega"
-    Returns: Badrequest if username exists, passwords don't match or either parameters not specified and displays error message on the server. Otherwise returns success with a message on the server.
+    Suggested usage: curl -k -X POST "https://poojanaik.webfactional.com/secrets_app/new" --data "user=poojanaik&pwd1=tarrega&pwd2=tarrega"
+    Returns: Badrequest if username exists, passwords don't match or either parameters not specified. Otherwise returns success.
+Note: -k is required with curl because webfaction's ssl certificates fail to get verified by the client. Webfaction documents this issue but ensures that the channel is encrypted.
 
 POST /login:
     Login user with username and password.
-    Suggested usage: curl -k -X POST --header "Authorization: Basic poojanaik:tarrega" "$ROOT_URL/login"
-    Returns: Success with a message on the server if successful. Badrequest or unauthorized with error message displayed on the server.
+    Suggested usage: curl -k -X POST --header "Authorization: Basic poojanaik:tarrega" "https://poojanaik.webfactional.com/secrets_app/login"
+    Returns: Success if successful. Badrequest or unauthorized otherwise.
+
+GET /logout:
+    Logs out user.
+    Suggested usage: curl -k -X GET "https://poojanaik.webfactional.com/secrets_app/secrets/logout"
+    Returns: Success
 
 /secrets:
 
     GET /secrets/(.*):
         Get all or specific secrets of user (Note: User has to be logged in)
-        Suggested usage: curl -k -X GET "$ROOT_URL/secrets/" for all secrets
-                                                             for secret with a specific ID
+        Suggested usage: curl -k -X GET "https://poojanaik.webfactional.com/secrets_app/secrets/"                                            for all secrets
+                         curl -k -X GET "https://poojanaik.webfactional.com/secrets_app/secrets/POST_ID"                    for secret with a specific ID
         Returns: Json object with secrets and their ids if sucessful. Unauthorized if not logged in.
 
     POST /secrets:
         Add a secret (Note: User has to be logged in)
-        Suggested usage: curl -k -X POST "$ROOT_URL/secrets/" --data "Very secretive here..."
+        Suggested usage: curl -k -X POST "https://poojanaik.webfactional.com/secrets_app/secrets/" --data "Very secretive here..."
         Returns: Json object with posted secret or unauthorized if not logged in.
 
     PATCH /secrets/(.*):
         Modify a secret by specifying an id (Note: User has to be logged in)
-        Suggested usage: curl -k -X PATCH "$ROOT_URL/secrets/$POST_ID"
+        Suggested usage: curl -k -X PATCH "https://poojanaik.webfactional.com/secrets_app/secrets/POST_ID"
         Returns: Json object with modified secret. Badrequest if invalid id, unauthorized if not logged in.
 
     DELETE /secrets/(.*):
         Delete specific or all secrets of user(Note: User has to be logged in)
-        Suggested usage: curl -k -X DELETE "$ROOT_URL/secrets/$POST_ID" for a specific id
-                         curl -k -X DELETE "$ROOT_URL/secrets/" for all secrets
+        Suggested usage: curl -k -X DELETE "https://poojanaik.webfactional.com/secrets_app/secrets/POST_ID" for a specific id
+                         curl -k -X DELETE "https://poojanaik.webfactional.com/secrets_app/secrets/" for all secrets
         Returns: Success if successful and badrequest or unauthorized if ID is invalid or not logged in
 
 Suggested extensions:
