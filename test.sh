@@ -39,6 +39,9 @@ curl -k -X DELETE "$ROOT_URL/secrets/$POST3_ID" && echo -e  "\n"
 echo -e  "Patching and updating secret with ID=$POST2_ID..."
 curl -k -X PATCH "$ROOT_URL/secrets/$POST2_ID" --data "New Secret!" && echo -e  "\n"
 
+echo -e  "Getting all secrets..."
+curl -k -X GET "$ROOT_URL/secrets/" && echo -e  "\n"
+
 echo -e "Deleting all secrets of test user..."
 curl -k -X DELETE "$ROOT_URL/secrets/" && echo -e  "\n"
 
@@ -47,3 +50,5 @@ curl -k -X GET "$ROOT_URL/secrets/" && echo -e  "\n"
 
 echo -e "Logging out.."
 curl -k -X GET "$ROOT_URL/secrets/logout" && echo -e "\n"
+curl -k -X GET "$ROOT_URL/logout" && echo -e "\n"
+

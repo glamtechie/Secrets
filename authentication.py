@@ -71,14 +71,14 @@ class Secrets:
         username = session_data['username']
 
         if not secret_id or len(secret_id) == 0:
-            raise web.BadRequest (message="Must supply a secret ID in the URL")
+            raise web.BadRequest (message="Must supply a valid secret ID in the URL")
 
-        # modified secret
+	# modified secret
         secret = web.data()
         response = auth_model.modify_secret (username, secret_id, secret)
 
 	    if response > 0:
-            return json.dumps({"id": secret_id, "secret": secret})
+            return json.dumps({"id": int(secret_id), "secret": secret})
 
         raise web.BadRequest (message="Couldn't update secret. Ensure the secret ID is valid by calling GET /secrets")
 
