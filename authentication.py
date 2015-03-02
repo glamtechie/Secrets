@@ -7,7 +7,6 @@ import base64
 import json
 
 urls=(
-    '/','Ask',
     '/login','Login',
     '/logout','Logout',
     '/new','New',
