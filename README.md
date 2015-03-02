@@ -8,7 +8,7 @@ Files:
 4. test.sh - Can be used to test the methods of the api
 
 Required downloads to run this api:
-1. Curl (you may choose to send the requests using any other too , but you will have to write your own test commands)
+1. Curl (you may choose to send the requests using any other tool)
 2. awk (to run test.sh)
 
 To test this api using test.sh, type './test.sh https://poojanaik.webfactional.com/secrets_app' on your terminal.
