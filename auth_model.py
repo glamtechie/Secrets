@@ -1,6 +1,6 @@
 import web
 
-db=web.database(dbn='mysql',db='secrets',user='root')
+db=web.database(dbn='mysql',db='secrets',user='poojanaik',pw='password')
 
 def new_user(name,text):
     db.insert('user_info',username=name,password=text)
@@ -29,4 +29,4 @@ def get_user(id):
 
 def delete_secret(user, secret_id):
     where_dict = { "id" : secret_id, "user" : user }
-    db.delete('user_secrets', vars=where_dict, where="username=$user and id=$id")
+    return db.delete('user_secrets', vars=where_dict, where="username=$user and id=$id")
