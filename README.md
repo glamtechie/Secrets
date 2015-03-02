@@ -11,7 +11,7 @@ Required downloads to run this api:
 1. Curl (you may choose to send the requests using any other too , but you will have to write your own test commands)
 2. awk (to run test.sh)
 
-To test this api using test.sh, type './tesh.sh https://poojanaik.webfactional.com/secrets_app' on your terminal.
+To test this api using test.sh, type './test.sh https://poojanaik.webfactional.com/secrets_app' on your terminal.
 
 Currently, the api is deployed on: https://poojanaik.webfactional.com/secrets_app/
 
@@ -21,28 +21,31 @@ Required downloads to host your own server:
 
 API:
 
-POST /new:
-    Create new user with username and password. Enter password twice.
-    Suggested usage: curl -k -X POST "https://poojanaik.webfactional.com/secrets_app/new" --data "user=poojanaik&pwd1=tarrega&pwd2=tarrega"
-    Returns: Badrequest if username exists, passwords don't match or either parameters not specified. Otherwise returns success.
-Note: -k is required with curl because webfaction's ssl certificates fail to get verified by the client. Webfaction documents this issue but ensures that the channel is encrypted.
+    POST /new:
+        Create new user with username and password. Enter password twice.
+        Suggested usage: curl -k -X POST "https://poojanaik.webfactional.com/secrets_app/new" --data "user=poojanaik&pwd1=tarrega&pwd2=tarrega"
+        Returns: Badrequest if username exists, passwords don't match or either parameters not specified. Otherwise returns success.
+    Note: -k is required with curl because webfaction's ssl certificates fail to get verified by the client. Webfaction documents this issue but ensures that the channel is encrypted.
 
-POST /login:
-    Login user with username and password.
-    Suggested usage: curl -k -X POST --header "Authorization: Basic poojanaik:tarrega" "https://poojanaik.webfactional.com/secrets_app/login"
-    Returns: Success if successful. Badrequest or unauthorized otherwise.
+    POST /login:
+        Login user with username and password.
+        Suggested usage: curl -k -X POST --header "Authorization: Basic poojanaik:tarrega" "https://poojanaik.webfactional.com/secrets_app/login"
+        Returns: Success if successful. Badrequest or unauthorized otherwise.
 
-GET /logout:
-    Logs out user.
-    Suggested usage: curl -k -X GET "https://poojanaik.webfactional.com/secrets_app/secrets/logout"
-    Returns: Success
+    GET /logout:
+        Logs out user.
+        Suggested usage: curl -k -X GET "https://poojanaik.webfactional.com/secrets_app/secrets/logout"
+        Returns: Success
 
 /secrets:
 
     GET /secrets/(.*):
         Get all or specific secrets of user (Note: User has to be logged in)
-        Suggested usage: curl -k -X GET "https://poojanaik.webfactional.com/secrets_app/secrets/"                                            for all secrets
-                         curl -k -X GET "https://poojanaik.webfactional.com/secrets_app/secrets/POST_ID"                    for secret with a specific ID
+        Suggested usage:
+                        for all secrets:
+                            curl -k -X GET "https://poojanaik.webfactional.com/secrets_app/secrets/"
+                        for secret with a specific ID:
+                            curl -k -X GET "https://poojanaik.webfactional.com/secrets_app/secrets/POST_ID"
         Returns: Json object with secrets and their ids if sucessful. Unauthorized if not logged in.
 
     POST /secrets:
