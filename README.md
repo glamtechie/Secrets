@@ -21,11 +21,16 @@ Required downloads to host your own server:
 
 API:
 
-    POST /new:
+    POST /user:
         Create new user with username and password. Enter password twice.
-        Suggested usage: curl -k -X POST "https://poojanaik.webfactional.com/secrets_app/new" --data "user=poojanaik&pwd1=tarrega&pwd2=tarrega"
+        Suggested usage: curl -k -X POST "https://poojanaik.webfactional.com/secrets_app/user" --data "user=poojanaik&pwd1=tarrega&pwd2=tarrega"
         Returns: Badrequest if username exists, passwords don't match or either parameters not specified. Otherwise returns success.
     Note: -k is required with curl because webfaction's ssl certificates fail to get verified by the client. Webfaction documents this issue but ensures that the channel is encrypted.
+
+    DELETE /user:
+	Deletes the currently logged-in user. 
+        Suggested usage: curl -k -X DELETE "https://poojanaik.webfactional.com/secrets_app/user"
+        Returns: Returns internal error if user could be deleted for some reason (after logging on the server side), otherwise OK.
 
     POST /login:
         Login user with username and password.
