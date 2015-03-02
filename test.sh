@@ -11,6 +11,9 @@ curl -X POST "$ROOT_URL/new" --data "user=poojanaik&pwd1=tarrega&pwd2=tarrega"  
 echo -e  "Logging in..."
 curl -X POST --header "Authorization: Basic poojanaik:tarrega" "$ROOT_URL/login" && echo -e "\n"
 
+echo -e "Deleting all secrets of test user..."
+curl -X DELETE "$ROOT_URL/secrets/" && echo -e  "\n"
+
 echo -e  "Posting a secret..."
 curl -X POST "$ROOT_URL/secrets/" --data "Very secretive here..." && echo -e "\n"
 

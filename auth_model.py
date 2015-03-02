@@ -33,4 +33,5 @@ def delete_secret(user, secret_id):
 
 # Warning! Deletes all secrets for a user.
 def delete_secrets(user):
-    return db.delete('user_secrets', where="username=$user")
+    where_dict = {"user" : user }
+    return db.delete('user_secrets', vars=where_dict, where="username=$user")
