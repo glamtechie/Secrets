@@ -49,6 +49,5 @@ echo -e  "Getting all secrets..."
 curl -k -X GET "$ROOT_URL/secrets/" && echo -e  "\n"
 
 echo -e "Logging out.."
-curl -k -X GET "$ROOT_URL/secrets/logout" && echo -e "\n"
 curl -k -X GET "$ROOT_URL/logout" && echo -e "\n"
 
