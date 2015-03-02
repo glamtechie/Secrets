@@ -20,12 +20,12 @@ curl -k -X POST "$ROOT_URL/secrets/" --data "Very secretive here..." && echo -e 
 echo -e  "Posting another secret..."
 POST2=`curl -k -X POST "$ROOT_URL/secrets/" --data "Very secretive here...Part 2"`
 echo -e "\n"
-POST2_ID=`echo $POST2 | awk -F: '{print $3}' | awk -F'}' '{print $1}'`
+POST2_ID=`echo $POST2 | awk -F: '{print $3}' | awk -F'}' '{print $1}' | awk -F' ' '{print $1}'`
 
 echo -e  "Posting yet another secret..."
 POST3=`curl -k -X POST "$ROOT_URL/secrets/" --data "Very secretive here...Part 3"`
 echo -e "\n"
-POST3_ID=`echo $POST3 | awk -F: '{print $3}' | awk -F'}' '{print $1}'`
+POST3_ID=`echo $POST3 | awk -F: '{print $3}' | awk -F'}' '{print $1}' | awk -F' ' '{print $1}'`
 
 echo -e "Get secret with ID=$POST3_ID..."
 curl -k -X GET "$ROOT_URL/secrets/$POST3_ID" && echo -e "\n"
@@ -47,4 +47,3 @@ curl -k -X GET "$ROOT_URL/secrets/" && echo -e  "\n"
 
 echo -e "Logging out.."
 curl -k -X GET "$ROOT_URL/secrets/logout" && echo -e "\n"
-

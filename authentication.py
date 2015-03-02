@@ -10,7 +10,7 @@ urls=(
     '/login','Login',
     '/logout','Logout',
     '/new','New',
-    '/secrets/(.*)','Secrets',
+    '/secrets/(\d*)','Secrets',
 )
 
 class Secrets:
