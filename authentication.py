@@ -44,7 +44,7 @@ class Secrets:
 
         return json.dumps({"id": secret_id, "secret": secret})
 
-    # Deletes the given secret
+    # Deletes the given secret or all secrets
     def DELETE(self, secret_id):
         if not session_data["loggedin"]:
             web.ctx.status = '401 Unauthorized'
@@ -53,9 +53,9 @@ class Secrets:
         username = session_data['username']
         
         if not secret_id or len(secret_id) == 0:
-          raise web.BadRequest (message="Must supply a secret ID in the URL")
-
-        response = auth_model.delete_secret (username, secret_id)
+		response = auth_model.delete_secrets (username)		
+	else:
+		response = auth_model.delete_secret (username, secret_id)
 
         if response > 0:
           return "OK"
@@ -77,7 +77,10 @@ class Secrets:
         secret = web.data()
         response = auth_model.modify_secret (username, secret_id, secret)
 
-        return json.dumps({"id": secret_id, "secret": secret})
+	if response > 0:
+		return json.dumps({"id": secret_id, "secret": secret})
+
+        raise web.BadRequest (message="Couldn't update secret. Ensure the secret ID is valid by calling GET /secrets")
 
 class Login:
     def POST(self):

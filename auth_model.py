@@ -22,7 +22,7 @@ def new_secrets(user,text):
 
 def modify_secret(user, secret_id, text):
     where_dict = { "id" : secret_id, "user" : user }
-    db.update('user_secrets', vars=where_dict, where="username=$user and id=$id",secret=text)
+    return db.update('user_secrets', vars=where_dict, where="username=$user and id=$id",secret=text)
 
 def get_user(id):
     return db.where('user_secrets',what='username',id=id)
@@ -30,3 +30,7 @@ def get_user(id):
 def delete_secret(user, secret_id):
     where_dict = { "id" : secret_id, "user" : user }
     return db.delete('user_secrets', vars=where_dict, where="username=$user and id=$id")
+
+# Warning! Deletes all secrets for a user.
+def delete_secrets(user):
+    return db.delete('user_secrets', where="username=$user")
