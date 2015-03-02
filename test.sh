@@ -9,7 +9,7 @@ ROOT_URL="$1"
 # The connection is still encrypted.
 
 echo -e  "Creating new user..."
-curl -k -X POST "$ROOT_URL/new" --data "user=poojanaik&pwd1=tarrega&pwd2=tarrega"  && echo -e  "\n"
+curl -k -X POST "$ROOT_URL/user" --data "user=poojanaik&pwd1=tarrega&pwd2=tarrega"  && echo -e  "\n"
 
 echo -e  "Logging in..."
 curl -k -X POST --header "Authorization: Basic poojanaik:tarrega" "$ROOT_URL/login" && echo -e "\n"
@@ -48,6 +48,6 @@ curl -k -X DELETE "$ROOT_URL/secrets/" && echo -e  "\n"
 echo -e  "Getting all secrets..."
 curl -k -X GET "$ROOT_URL/secrets/" && echo -e  "\n"
 
-echo -e "Logging out.."
-curl -k -X GET "$ROOT_URL/logout" && echo -e "\n"
+echo -e  "Delete test user..."
+curl -k -X DELETE "$ROOT_URL/user"  && echo -e  "\n"
 

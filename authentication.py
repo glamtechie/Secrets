@@ -7,11 +7,17 @@ import base64
 import json
 
 urls=(
+    '/', 'Index',
     '/login','Login',
     '/logout','Logout',
-    '/new','New',
+    '/user','User',
     '/secrets/(\d*)','Secrets',
 )
+
+class Index:
+    def GET(self):
+	response = { message : "Welcome to Pooja's Secrets API!", urls : urls }
+	return json.dumps(response)
 
 class Secrets:
     def GET(self, secret_id):
@@ -112,7 +118,7 @@ class Logout:
         session_data['loggedin'] = False
         return "You are now logged out!"
 
-class New:
+class User:
     def POST(self):
         data = urlparse.parse_qs(web.data())
         USER_KEY='user'
@@ -137,6 +143,20 @@ class New:
             session_data['username'] = user
             return "Signed up! You are also logged in now!"
 
+    def DELETE(self):
+        if not session_data["loggedin"]:
+	    web.ctx.status = '401 Unauthorized'
+	    return "You must log-in before deleting secrets"
+
+	username = session_data['username']
+	response1 = auth_model.delete_secrets (username)
+	response2 = auth_model.delete_user (username)
+
+	if response2 > 0:
+		return "OK"
+
+	raise web.InternalError (message = "User could not be deleted.")
+	
 app=web.application(urls,globals())
 web.config.debug=False
 session = web.session.Session(app, web.session.DiskStore('sessions'), initializer={'loggedin': False,'username':''})
